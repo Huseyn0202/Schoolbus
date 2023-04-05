@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('model');
             $table->string('vendor');
             $table->string('serialnumber');
+            $table->unsignedInteger('seatCount');
+
             $table->timestamps();
         });
     }

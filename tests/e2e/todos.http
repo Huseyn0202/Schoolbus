@@ -1,0 +1,36 @@
+@host=http://127.0.0.1:8000/api 
+
+###ADD Parent
+
+POST {{host}}/parent/add/
+Content-Type: application/json
+
+{
+"firstname":"Huseyn",
+"surname":"Humbetli",
+"email":"Huseyn@mail.ru",
+"phone":"0555555555"
+}
+
+###Update Parent
+
+PUT {{host}}/parent/update/1/
+Content-Type: application/json
+
+{
+"firstname":"Huseyn",
+"surname":"Humbetsiz",
+"email":"Huseyn@mail.ru",
+"phone":"0555555555"
+}
+
+###ADD Student
+
+POST {{host}}/student/add/
+Content-Type: application/json
+
+{
+"firstname":"Huseyn",
+"surname":"Humbetli",
+
+}

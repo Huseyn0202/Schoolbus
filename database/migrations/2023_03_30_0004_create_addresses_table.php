@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('drivers', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname');
-            $table->string('surname');
-            $table->string('phone');
-            $table->unsignedBigInteger('car_id')->unsigned()->nullable();
             $table->timestamps();
-            $table->foreign('car_id')->references('id')->on('cars')->onDelete('set null');
+            $table->float('latitude');
+            $table->float('longitude');
         });
     }
 
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('drivers');
+        Schema::dropIfExists('addresses');
     }
 };

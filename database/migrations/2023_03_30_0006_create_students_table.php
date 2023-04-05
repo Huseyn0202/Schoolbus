@@ -17,11 +17,13 @@ return new class extends Migration
             $table->string('surname');
             $table->integer('class');
             $table->string('classname');
-            $table->unsignedBigInteger('parent_id')->unsigned();
+            $table->unsignedBigInteger('parent_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('address_id')->unsigned();
             $table->unsignedBigInteger('ride_id')->unsigned()->nullable();
             $table->timestamps();
-            
-            $table->foreign('parent_id')->references('id')->on('parrents')->onDelete('cascade');
+
+            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('parrents')->onDelete('set null');
             $table->foreign('ride_id')->references('id')->on('rides')->onDelete('set null');
         });
     }

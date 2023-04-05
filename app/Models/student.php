@@ -20,4 +20,9 @@ class student extends Model
     {
         return $this->hasOne(ride::class, 'ride_id', 'id');
     }
+
+    public function addressStudent(): HasOne
+    {
+        return $this->hasOne(address::class, 'address_id', 'id');
+    }
 }
