@@ -62,21 +62,28 @@ class RideController extends Controller
 
     public function StartRide($id)
     {
-        $ride = ride::find($id);
-        $ride->isStarted = true;
-        $ride->update();
-        return response("Ok", 200);
+        try {
+            //code...
+            $ride = ride::find($id);
+            $ride->isStarted = true;
+            $ride->update();
+            return response("Ok", 200);
+        } catch (\Throwable $th) {
+            return response('Not found', 404);
+        }
     }
 
     public function EndRide($id)
     {
-        $ride = ride::find($id);
-        $ride->isStarted = false;
-        $ride->update();
-        return response("Ok", 200);
+        try {
+            $ride = ride::find($id);
+            $ride->isStarted = false;
+            $ride->update();
+            return response("Ok", 200);
+        } catch (\Throwable $th) {
+            return response('Not found', 404);
+        }
     }
-
-    
 
     /**
      * Display the specified resource.
@@ -105,14 +112,29 @@ class RideController extends Controller
 
             try {
 
-                $ride->isStarted = $request->isStarted;
+                $ride = new ride();
+    
+                $ride->isStarted = false;
+    
                 $ride->driver_id = $request->driver_id;
-                $ride->address_id = $request->address_id;
+    
                 $ride->direction = $request->direction;
+    
                 $ride->update();
-                return response()->json(['msg' => 'Ride was changed'], 200);
+    
+                foreach ($request->addresses as $address) {
+    
+                    $rideAddress = new rideAddress();
+    
+                    $rideAddress->ride_id = $ride->id;
+    
+                    $rideAddress->address_id = $address->address_id;
+    
+                    $rideAddress->update();
+                }
+                return response("Ok", 200);
             } catch (\Throwable $th) {
-                return response()->json(['msg' => 'Has a problem'], 404);
+                return response('Not found', 404);
             }
         } else {
             return response()->json(['msg' => 'Ride was not found'], 404);
