@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ride;
+use App\Models\rideAddress;
+use App\Models\student;
+use App\Models\parrent;
 use Illuminate\Http\Request;
 
 class RideController extends Controller
@@ -12,8 +15,8 @@ class RideController extends Controller
      */
     public function getRide()
     {
-        $ride=ride::all();
-        return response($ride,200);
+        $ride = ride::all();
+        return response($ride, 200);
     }
 
     /**
@@ -30,16 +33,50 @@ class RideController extends Controller
     public function add(Request $request)
     {
         try {
+
             $ride = new ride();
-            $ride->isStarted = $request->isStarted;
+
+            $ride->isStarted = false;
+
             $ride->driver_id = $request->driver_id;
-            $ride->address_id = $request->address_id;
+
             $ride->direction = $request->direction;
+
             $ride->save();
+
+            foreach ($request->addresses as $address) {
+
+                $rideAddress = new rideAddress();
+
+                $rideAddress->ride_id = $ride->id;
+
+                $rideAddress->address_id = $address->address_id;
+
+                $rideAddress->save();
+            }
+            return response("Ok", 201);
         } catch (\Throwable $th) {
-            //throw $th;
+            return response('Not found', 404);
         }
     }
+
+    public function StartRide($id)
+    {
+        $ride = ride::find($id);
+        $ride->isStarted = true;
+        $ride->update();
+        return response("Ok", 200);
+    }
+
+    public function EndRide($id)
+    {
+        $ride = ride::find($id);
+        $ride->isStarted = false;
+        $ride->update();
+        return response("Ok", 200);
+    }
+
+    
 
     /**
      * Display the specified resource.
@@ -60,9 +97,9 @@ class RideController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $ride =ride::find($id);
+        $ride = ride::find($id);
 
         if ($ride) {
 
@@ -89,10 +126,9 @@ class RideController extends Controller
     {
         try {
             ride::find($id)->delete();
-            return response('ok',200);
-            
+            return response('ok', 200);
         } catch (\Throwable $th) {
-            return response('not found',404);
+            return response('not found', 404);
         }
     }
 }

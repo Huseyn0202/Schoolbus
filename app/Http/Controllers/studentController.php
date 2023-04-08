@@ -15,63 +15,63 @@ class studentController extends Controller
     {
         try {
             //code...
-      
-        $student = new student();
 
-        $address = new address();
+            $student = new student();
 
-        $address->latitude = $req->latitude;
+            $address = new address();
 
-        $address->longitude = $req->longitude;
-        $address->save();
+            $address->latitude = $req->latitude;
 
-        $student->firstname = $req->firstname;
+            $address->longitude = $req->longitude;
 
-        $student->surname = $req->surname;
+            $address->save();
 
-        $student->class = $req->class;
+            $student->firstname = $req->firstname;
 
-        $student->classname = $req->classname;
+            $student->surname = $req->surname;
 
-        $student->parent_id = $req->parent_id;
+            $student->class = $req->class;
 
-        $student->address_id=$address->id;
+            $student->classname = $req->classname;
 
+            $student->parent_id = $req->parent_id;
 
-        $student->save();
+            $student->address_id = $address->id;
 
-        return response($student,201);
-    } catch (\Throwable $th) {
-        return response($student,404);
+            $student->save();
+
+            return response($student, 201);
+        } catch (\Throwable $th) {
+            return response($student, 404);
+        }
     }
+    public function delete($id)
+    {
+        try {
+            student::find($id)->delete();
+            return response("ok", 200);
+            //code...
+        } catch (\Throwable $th) {
+            return response("not found", 404);
+        }
     }
-   public function delete($id){
-    try {
-        student::find($id)->delete();
-        return response("ok",200);
-        //code...
-    } catch (\Throwable $th) {
-        return response("not found",404);
-    }
 
-
-   }
-
-    public function update(Request $request,$id){
-        $student =student::find($id);
+    public function update(Request $request, $id)
+    {
+        $student = student::find($id);
 
         if ($student) {
 
             try {
 
-              $student->firstname = $request->firstname;
-              $student->surname = $request->surname;
-              $student->class = $request->class;
-              $student->classname = $request->classname;
-              $student->parent_id = $request->parent_id;
-              $student->address_id = $request->address_id;
-              $student->ride_id = $request->ride_id;
-              $student->update();
+                $student->firstname = $request->firstname;
+                $student->surname = $request->surname;
+                $student->class = $request->class;
+                $student->classname = $request->classname;
+                $student->parent_id = $request->parent_id;
+                $student->address_id = $request->address_id;
+                $student->ride_id = $request->ride_id;
+                $student->update();
                 return response()->json(['msg' => 'Student was changed'], 200);
             } catch (\Throwable $th) {
                 return response()->json(['msg' => 'Has a problem'], 404);
@@ -79,19 +79,12 @@ class studentController extends Controller
         } else {
             return response()->json(['msg' => 'Student was not found'], 404);
         }
-
     }
 
-public function getStudent(){
+    public function getStudent()
+    {
 
-$student=student::all();
-return response($student,200);
-
-
-
-
-}
-
-
-
+        $student = student::all();
+        return response($student, 200);
+    }
 }

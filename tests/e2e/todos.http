@@ -1,6 +1,6 @@
 @host=http://127.0.0.1:8000/api 
 
-###ADD Parent
+###Add Parent
 
 POST {{host}}/parent/add/
 Content-Type: application/json
@@ -24,7 +24,17 @@ Content-Type: application/json
 "phone":"0555555555"
 }
 
-###ADD Student
+###Remove Parent
+
+GET {{host}}/parent/delete/1/
+Content-Type: application/json
+
+###GetParents
+
+GET {{host}}/parent/getParent
+Content-Type: application/json
+
+###Add Student
 
 POST {{host}}/student/add/
 Content-Type: application/json
@@ -32,5 +42,100 @@ Content-Type: application/json
 {
 "firstname":"Huseyn",
 "surname":"Humbetli",
+"class":5,
+"classname":"A",
+"parent_id":1,
+"latitude":45.78,
+"longitude":31.69
+}
+
+
+### Update Student
+
+PUT {{host}}/student/update/1/
+Content-Type: application/json
+
+{
+"firstname":"Huseyn",
+"surname":"Humbetli",
+"class":5,
+"classname":"A",
+"parent_id":1,
+"latitude":45.78,
+"longitude":31.69,
+"address_id":2
+}
+
+### Remove student
+GET {{host}}/student/delete/1/
+Content-Type: application/json
+
+### GetParents
+GET {{host}}/student/getStudent
+Content-Type: application/json
+
+### Ad Car
+
+POST {{host}}/car/add/
+Content-Type: application/json
+
+{
+"model":"Huseyn",
+"vendor":"Humbetli",
+"serialnumber":"Huseyn@mail.ru",
+"seatCount":"0555555555"
+}
+
+###Update Car
+
+PUT {{host}}/car/update/1
+Content-Type: application/json
+
+{
+"model":"Huseyn",
+"vendor":"Humbetli",
+"serialnumber":"Huseyn@mail.ru",
+"seatCount":"0555555555"
+}
+### Remove Car
+GET {{host}}/car/delete/1
+Content-Type: application/json
+
+###GET Car
+GET {{host}}/car/getCar
+Content-Type: application/json
+
+### Add Driver
+
+POST {{host}}/driver/add/
+Content-Type: application/json
+
+{
+"firstname":"Huseyn",
+"surname":"Humbetli",
+"phone":5,
+"license":"A",
+"car_id":1
 
 }
+
+###Update Driver
+PUT {{host}}/driver/update/1
+Content-Type:application/json
+
+{
+"firstname":"Huseyn",
+"surname":"Humbetli",
+"phone":5,
+"license":"A",
+"car_id":1
+}
+ ### Remove Driver
+ GET {{host}}/driver/delete/1
+Content-Type: application/json
+
+
+### Get Driver
+GET {{host}}/driver/getDriver
+Content-Type: application/json
+

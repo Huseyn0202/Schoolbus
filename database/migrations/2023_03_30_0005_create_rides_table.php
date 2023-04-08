@@ -16,12 +16,10 @@ return new class extends Migration
             $table->id();
             $table->boolean('isStarted');
             $table->unsignedBigInteger('driver_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('address_id')->unsigned()->nullable();
             $table->enum('direction', ['toSchool', 'toHome']);
             $table->timestamps();
 
             $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('set null');
-            $table->foreign('address_id')->references('id')->on('addresses')->onDelete('set null');
         });
     }
 
